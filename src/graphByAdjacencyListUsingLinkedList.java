@@ -1,7 +1,4 @@
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.*;
 
 public class graphByAdjacencyListUsingLinkedList {
     LinkedList <Integer> [] adj;
@@ -55,6 +52,39 @@ public class graphByAdjacencyListUsingLinkedList {
             }
         }
     }
+    // This is code for the find shortest path between the source and dest nodes in undirected and unweighted graph.
+    public void shortestPath(int s, int d){
+        Queue<Integer> q = new LinkedList<>();
+        boolean []visited = new boolean[this.vertices];
+        int []parent = new int[this.vertices];
+
+        q.offer(s);
+        visited[s] = true;
+        parent[s] = -1;
+
+        while(!q.isEmpty()){
+            int v = q.poll();
+            for(int i : this.adj[v]){
+                if(!visited[i]){
+                    q.offer(i);
+                    parent[i] = v;
+                }
+            }
+        }
+
+        int curr = d;
+        ArrayList<Integer>list = new ArrayList<>();
+        list.add(curr);
+        while(curr != s){
+            curr = parent[curr];
+            list.add(curr);
+        }
+
+        System.out.println("The shortest Path node :-");
+        for (int i : list){
+            System.out.print(i + " ");
+        }
+    }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -78,5 +108,6 @@ public class graphByAdjacencyListUsingLinkedList {
         g.bfs(0);
         System.out.println();
         g.dfs(0);
+        g.shortestPath(0,4);
     }
 }
